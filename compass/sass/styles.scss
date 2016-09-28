@@ -60,22 +60,27 @@ body{
 			font-size: 20px;
 			line-height: 28px;
 			color: #253b56;
+			margin-top: 15px;
 		}
 		.left-block-items{
 			.left-block-item{
+				margin-top: 25px;
 				margin-bottom: 10px;
 				border-bottom: 1px solid #ccc;
 				.hero-image{
 					display: inline-block;
 					max-width: 30%;
+					vertical-align: top;
 					img{
 						max-width: 100%;
+						margin-bottom: 25px;
 					}
 
 				}
 				.hero-text-wrapper{
 					display: inline-block;
 					max-width: 60%;
+					margin-left: 15px;
 					.block-header{
 
 					}
@@ -90,11 +95,22 @@ body{
 		width: 29%;
 		display: inline-block;
 		vertical-align: top;
+		.hours{
+			width: 90%;
+			background-color: #ebf6fc;
+			border-radius: 5px;
+			margin: 20px 0px;
+			margin-left: 10px;
+			padding: 15px;
+		}
 		.tickets{
+			width: 90%;
 			background-color: #1994d7;
 			border-radius: 5px;
 			text-align: center;
 			padding: 20px 0px;
+			margin: 30px 0px;
+			margin-left: 10px;
 			p{
 				color: #fff;
 				margin: 5px 0px;
@@ -112,6 +128,8 @@ body{
 		}
 		.map{
 			text-align: center;
+			margin: 30px 0px;
+			
 		}
 	}
 }
