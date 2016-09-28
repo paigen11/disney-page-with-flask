@@ -1,0 +1,117 @@
+//  @import "compass/utilities";
+//  @import "compass/css3";
+
+// // CONFIGS
+// // -------------------------------
+// @import "configs/variables";
+
+// // LAYOUT
+// // -------------------------------
+// @import "layout/layout";
+// @import "layout/header";
+// @import "layout/footer";
+
+// // VIEWS
+// // -------------------------------
+// @import "views/home";
+// @import "views/subscribe";
+// @import "views/choices";
+// @import "views/delivery";
+// @import "views/payment";
+// @import "views/account";
+body{
+	background-color: #1d96d7 ;
+}
+
+.header{
+	height: 60px;
+	background-color: #fff;
+	.menu-wrapper{
+		max-width: 960px;
+		margin: auto;
+		li{
+			float: left;
+			list-style-type: none;
+			padding: 0px 20px;
+		}
+	}
+}
+
+.main-content{
+	max-width: 960px;
+	margin: auto;
+	border-radius: 5px;
+	background-color: #fff;
+	.header-image{
+		text-align: center;
+		img{
+			border-radius: 12px;
+			max-width: 100%;
+		}
+	}
+	.left-content-bar{
+		width: 69%;
+		display: inline-block;
+		padding-left: 20px;
+		box-sizing: border-box;
+		vertical-align: top;
+		p.left-bar-header{
+			font-family: Helvetica, Arial, Sans-serif;
+			font-size: 20px;
+			line-height: 28px;
+			color: #253b56;
+		}
+		.left-block-items{
+			.left-block-item{
+				margin-bottom: 10px;
+				border-bottom: 1px solid #ccc;
+				.hero-image{
+					display: inline-block;
+					max-width: 30%;
+					img{
+						max-width: 100%;
+					}
+
+				}
+				.hero-text-wrapper{
+					display: inline-block;
+					max-width: 60%;
+					.block-header{
+
+					}
+					.block-text{
+
+					}
+				}
+			}
+		}
+	}
+	.right-content-bar{
+		width: 29%;
+		display: inline-block;
+		vertical-align: top;
+		.tickets{
+			background-color: #1994d7;
+			border-radius: 5px;
+			text-align: center;
+			padding: 20px 0px;
+			p{
+				color: #fff;
+				margin: 5px 0px;
+			}
+			.ticket-price{
+				color: #fff;
+				font-size: 36px;	
+			}
+			button{
+				background-color: #1994d7;
+				color: #fff;
+				border: 1px solid #eee;
+				border-radius: 5px;
+			}
+		}
+		.map{
+			text-align: center;
+		}
+	}
+}

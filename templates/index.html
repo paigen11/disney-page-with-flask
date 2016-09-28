@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block body %}
+	<div class='header'>
+		<ul class='menu-wrapper'>
+			<li>Parks & Tickets</li>
+			<li>Places to Stay</li>
+			<li>Things to Do</li>
+			<li>Help</li>
+			<li>Cart</li>
+		</ul>
+	</div> 
+
+	<div class='main-content'>
+		<div class='main-header'>
+			<h1>Disney's Animal Kingdom Theme Park</h1>
+		</div>
+
+		<div class='header-image'>
+			<img src='static/images/tree.jpg'>
+		</div>
+
+		<div class='left-content-bar'>
+			<p class='left-bar-header'>
+				{{header_text[0][0]}}
+			</p>
+
+			<div class='left-block-items'>
+				{% for item in left_block %}
+				<div class='left-block-item'>
+					<div class='hero-image'>
+						<img src='static/images/{{item[1]}}'>
+					</div>	
+					<div class='hero-text-wrapper'>
+						<p class='block-header'>{{item[2]}}</p>
+						<p class='block-text'>{{item[0]}}</p>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			
+		</div>	
+
+		<div class='right-content-bar'>
+			<div class='hours'>
+				<p>Hours</p>
+				<p>Wednesday</p>
+				<p>September 28, 2016</p>
+				<p>9:00 AM to 9:00 PM</p>
+			</div>
+			<div class='print-map'>
+				Download Printable Map Guest Services
+			</div>
+			<div class='tickets'>
+				<p>Starting at </p>
+				<p class='ticket-price'>$97.00</p>
+				<p>for one-day ticket!</p>
+				<button>Purchase Admission</button>
+			</div>
+			<div class='map'>
+				<img src='static/images/map.png'>
+			</div>
+		</div>
+
+
+		Welcome to the home page, more is coming!
+	</div>
+
+{% endblock %}	
