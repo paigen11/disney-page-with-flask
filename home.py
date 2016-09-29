@@ -35,6 +35,10 @@ def admin():
 		return render_template('admin.html',
 			message = 'Login Failed'
 		)
+	elif request.args.get('message1'):
+		return render_template('admin.html', 
+			message = 'Logged Out'
+		)	
 	else: 
 		return render_template('admin.html')	
 
@@ -42,7 +46,7 @@ def admin():
 def logout():
 	# nuke their session vars. this will end the session which is what we use to let them into the portal
 	session.clear()
-	return redirect('/admin?message=LoggedOut')
+	return redirect('/admin?message1=LoggedOut')
 
 # make a new route called admin_submit. Add method post so that form can get here
 @app.route('/admin_submit', methods=['GET', 'POST'])
@@ -60,13 +64,32 @@ def admin_submit():
 def admin_portal():
 	# session variable 'username' exists ... proceed
 	# make sure to check if it's in the dictionary rather than just 'if'
-	if 'username' in session:
+	if 'username' in session and request.args.get('success'):
+		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		cursor.execute(home_page_query)
+		data = cursor.fetchall()
+		return render_template('/admin_portal.html', success='Content Added', home_page_content = data)
+
+	elif 'username' in session and request.args.get('success1'):
+		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		cursor.execute(home_page_query)
+		data = cursor.fetchall()
+		return render_template('admin_portal.html', success='Content Updated',			home_page_content = data)
+
+	elif 'username' in session and request.args.get('success2'):
+		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		cursor.execute(home_page_query)
+		data = cursor.fetchall()
+		return render_template('/admin_portal.html', success='Content Deleted', home_page_content = data)
+
+	elif 'username' in session:
 		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
 		cursor.execute(home_page_query)
 		data = cursor.fetchall()
 		return render_template('admin_portal.html', 
 			#data is what it is here, home_page_content is what it is to the template
 			home_page_content = data)
+	
 	# you have no ticket. no soup for you
 	else:	
 		return redirect('/admin?message=You_must_log_in')
@@ -84,7 +107,7 @@ def admin_update():
 		query = ("INSERT INTO page_content VALUES (DEFAULT, 'home', '"+body+"', 1, 1, 'left_block', NULL, '"+header+"', '"+image+"')")
 		cursor.execute(query)
 		conn.commit()
-		return redirect('/admin_portal?success=Added')
+		return redirect('/admin_portal?success=Added')			
 
 # you have no ticket. no soup for you
 	else:	
@@ -106,10 +129,16 @@ def edit(id):
 		status = request.form['status']
 		priority = request.form['priority']
 
-		query = "UPDATE page_content SET content= %s, image_link=%s, header_text=%s, status=%s, priority=%s WHERE id =%s"
+		query = "UPDATE page_content SET content=%s, image_link=%s, header_text=%s, status=%s, priority=%s WHERE id =%s"
 		cursor.execute(query, (content, image_link, header_text, status, priority, id))
 		conn.commit()
-		return redirect('/admin_portal?success=ContentUpdated')
+		return redirect('/admin_portal?success1=ContentUpdated')
+
+@app.route('/delete/<id>')
+def delete(id):
+	cursor.execute("DELETE FROM page_content WHERE id="+id)
+	conn.commit()
+	return redirect('/admin_portal?success2=ContentDeleted')		
 
 if __name__ == "__main__":
 	app.run(debug=True)
