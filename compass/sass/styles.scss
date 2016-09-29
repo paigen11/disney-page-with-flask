@@ -23,6 +23,26 @@ body{
 	background-color: #1d96d7 ;
 }
 
+form{
+	clear: both;
+}
+
+#nav{
+	overflow: hidden;
+	margin: auto;
+	ul{
+		list-style: none;
+		li{
+			float: left;
+			margin-right: 20px;
+			a{
+				color: #fff;
+				font-size: 18px;
+			}
+		}
+	}
+}
+
 .header{
 	height: 60px;
 	background-color: #fff;
@@ -33,6 +53,7 @@ body{
 			float: left;
 			list-style-type: none;
 			padding: 0px 20px;
+			margin-top: 27px;
 		}
 	}
 }
@@ -40,8 +61,15 @@ body{
 .main-content{
 	max-width: 960px;
 	margin: auto;
+	margin-bottom: 30px;
+	padding-bottom: 15px;
 	border-radius: 5px;
 	background-color: #fff;
+	.main-header{
+		margin: 20px;
+		padding-top: 1px;
+
+	}
 	.header-image{
 		text-align: center;
 		img{
@@ -75,7 +103,6 @@ body{
 						max-width: 100%;
 						margin-bottom: 25px;
 					}
-
 				}
 				.hero-text-wrapper{
 					display: inline-block;
@@ -86,6 +113,12 @@ body{
 					}
 					.block-text{
 
+					}
+				}
+				.arrow-image{
+					display: inline-block;
+					img{
+						margin-bottom: 40px;
 					}
 				}
 			}
@@ -102,6 +135,13 @@ body{
 			margin: 20px 0px;
 			margin-left: 10px;
 			padding: 15px;
+			p{
+				margin-bottom: -3px;
+			}
+			.print-map{
+				color: #40ace6;
+				margin-top: 20px;
+			}
 		}
 		.tickets{
 			width: 90%;
@@ -129,6 +169,13 @@ body{
 		.map{
 			text-align: center;
 			margin: 30px 0px;
+			border-bottom: 1px solid #ccc;
+			p{
+				text-align: left;
+			}
+			img{
+				margin-bottom: 30px;
+			}
 			
 		}
 	}

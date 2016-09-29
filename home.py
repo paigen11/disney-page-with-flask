@@ -18,14 +18,13 @@ app.secret_key = "FHNOGVOIWHWNQFQW(FHGNRUOGEWOUGHEW"
 
 @app.route("/")
 def index():
-	cursor = conn.cursor()
     # execute our query
 	cursor.execute("SELECT content FROM page_content WHERE page= 'home' AND location= 'header' AND status = 1")
 	header_text = cursor.fetchall()
 
-	cursor2 = conn.cursor()
-	cursor2.execute("SELECT content, image_link, header_text FROM page_content WHERE page= 'home' AND location= 'left-block' AND status =1")
-	left_block = cursor2.fetchall()
+	#write /run query that will pull three main fields for all three needed rows
+	cursor.execute("SELECT content, image_link, header_text FROM page_content WHERE page= 'home' AND location= 'left-block' AND status =1")
+	left_block = cursor.fetchall()
 
 	return render_template('index.html', header_text = header_text, left_block = left_block)
 
@@ -39,6 +38,11 @@ def admin():
 	else: 
 		return render_template('admin.html')	
 
+@app.route('/logout')
+def logout():
+	# nuke their session vars. this will end the session which is what we use to let them into the portal
+	session.clear()
+	return redirect('/admin?message=LoggedOut')
 
 # make a new route called admin_submit. Add method post so that form can get here
 @app.route('/admin_submit', methods=['GET', 'POST'])
@@ -57,7 +61,12 @@ def admin_portal():
 	# session variable 'username' exists ... proceed
 	# make sure to check if it's in the dictionary rather than just 'if'
 	if 'username' in session:
-		return render_template('admin_portal.html')
+		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		cursor.execute(home_page_query)
+		data = cursor.fetchall()
+		return render_template('admin_portal.html', 
+			#data is what it is here, home_page_content is what it is to the template
+			home_page_content = data)
 	# you have no ticket. no soup for you
 	else:	
 		return redirect('/admin?message=You_must_log_in')
@@ -73,15 +82,34 @@ def admin_update():
 
 # execute our query
 		query = ("INSERT INTO page_content VALUES (DEFAULT, 'home', '"+body+"', 1, 1, 'left_block', NULL, '"+header+"', '"+image+"')")
-		print query
-		cursor = mysql.connect().cursor()
 		cursor.execute(query)
 		conn.commit()
 		return redirect('/admin_portal?success=Added')
 
 # you have no ticket. no soup for you
 	else:	
-		return redirect('/admin?message=YouMustLogIn')		
+		return redirect('/admin?message=YouMustLogIn')
+
+@app.route('/edit/<id>', methods=['GET', 'POST'])
+def edit(id):
+	if request.method == 'GET':
+		query = "SELECT content, image_link, header_text, id, status, priority FROM page_content WHERE id="+id
+		cursor.execute(query)
+		data = cursor.fetchone()
+		# return id
+		return render_template('edit.html', data = data)
+	else:
+		#do the post stuff
+		content=request.form['body_text']
+		image_link = request.form['image']
+		header_text= request.form['header']
+		status = request.form['status']
+		priority = request.form['priority']
+
+		query = "UPDATE page_content SET content= %s, image_link=%s, header_text=%s, status=%s, priority=%s WHERE id =%s"
+		cursor.execute(query, (content, image_link, header_text, status, priority, id))
+		conn.commit()
+		return redirect('/admin_portal?success=ContentUpdated')
 
 if __name__ == "__main__":
 	app.run(debug=True)

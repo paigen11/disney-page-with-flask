@@ -2,6 +2,7 @@
 {% block body %}
 	<div class='header'>
 		<ul class='menu-wrapper'>
+			<li><img src='static/images/disney_logo.jpg'></li>
 			<li>Parks & Tickets</li>
 			<li>Places to Stay</li>
 			<li>Things to Do</li>
@@ -34,6 +35,9 @@
 						<h4 class='block-header'>{{item[2]}}</h4>
 						<p class='block-text'>{{item[0]}}</p>
 					</div>
+					<div class='arrow-image'>
+						<img src='static/images/arrow.svg'>
+					</div>
 				</div>
 				{% endfor %}
 			</div>
@@ -42,7 +46,7 @@
 
 		<div class='right-content-bar'>
 			<div class='hours'>
-				<p>Hours</p>
+				<h4>Hours</h4>
 				<p>Wednesday</p>
 				<p>September 28, 2016</p>
 				<p>9:00 AM to 9:00 PM</p>
@@ -57,12 +61,11 @@
 				<button>Purchase Admission</button>
 			</div>
 			<div class='map'>
+				<p>Map</p>
 				<img src='static/images/map.png'>
 			</div>
 		</div>
 
-
-		Welcome to the home page, more is coming!
 	</div>
 
 {% endblock %}	
