@@ -23,10 +23,17 @@ def index():
 	header_text = cursor.fetchall()
 
 	#write /run query that will pull three main fields for all three needed rows
-	cursor.execute("SELECT content, image_link, header_text FROM page_content WHERE page= 'home' AND location= 'left-block' AND status =1")
+	cursor.execute("SELECT content, image_link, header_text, id FROM page_content WHERE page= 'home' AND location= 'left-block' AND status =1")
 	left_block = cursor.fetchall()
 
 	return render_template('index.html', header_text = header_text, left_block = left_block)
+
+@app.route('/pages/<id>')
+def pages(id):
+	query = "SELECT content, big_image, header_text FROM page_content WHERE id="+id
+	cursor.execute(query)
+	data = cursor.fetchone()
+	return render_template('pages.html', data = data)
 
 @app.route('/admin')
 def admin():
@@ -65,25 +72,25 @@ def admin_portal():
 	# session variable 'username' exists ... proceed
 	# make sure to check if it's in the dictionary rather than just 'if'
 	if 'username' in session and request.args.get('success'):
-		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		home_page_query = "SELECT content, image_link, header_text, location, id, big_image FROM page_content WHERE page= 'home' AND status =1"
 		cursor.execute(home_page_query)
 		data = cursor.fetchall()
 		return render_template('/admin_portal.html', success='Content Added', home_page_content = data)
 
 	elif 'username' in session and request.args.get('success1'):
-		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		home_page_query = "SELECT content, image_link, header_text, location, id, big_image FROM page_content WHERE page= 'home' AND status =1"
 		cursor.execute(home_page_query)
 		data = cursor.fetchall()
 		return render_template('admin_portal.html', success='Content Updated',			home_page_content = data)
 
 	elif 'username' in session and request.args.get('success2'):
-		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		home_page_query = "SELECT content, image_link, header_text, location, id, big_image FROM page_content WHERE page= 'home' AND status =1"
 		cursor.execute(home_page_query)
 		data = cursor.fetchall()
 		return render_template('/admin_portal.html', success='Content Deleted', home_page_content = data)
 
 	elif 'username' in session:
-		home_page_query = "SELECT content, image_link, header_text, location, id FROM page_content WHERE page= 'home' AND status =1"
+		home_page_query = "SELECT content, image_link, header_text, location, id, big_image FROM page_content WHERE page= 'home' AND status =1"
 		cursor.execute(home_page_query)
 		data = cursor.fetchall()
 		return render_template('admin_portal.html', 
@@ -101,10 +108,18 @@ def admin_update():
 	# ok, they are logged in, I will insert your stuff
 		body = request.form['body_text']
 		header = request.form['header']
-		image = request.form['image']
+		# if 'image' in request.files['image']:
+		image = request.files['image']
+		image.save('static/images/' + image.filename)
+		image_path = image.filename
+		
+		# if 'image2' in request.files['image2']:
+		big_image = request.files['big_image']
+		big_image.save('static/images/' + big_image.filename)
+		image_path2 = big_image.filename
 
 # execute our query
-		query = ("INSERT INTO page_content VALUES (DEFAULT, 'home', '"+body+"', 1, 1, 'left_block', NULL, '"+header+"', '"+image+"')")
+		query = ("INSERT INTO page_content VALUES (DEFAULT, 'home', '"+body+"', 1, 1, 'left_block', NULL, '"+header+"', '"+image_path+"', '"+image_path2+"')")
 		cursor.execute(query)
 		conn.commit()
 		return redirect('/admin_portal?success=Added')			
@@ -116,7 +131,7 @@ def admin_update():
 @app.route('/edit/<id>', methods=['GET', 'POST'])
 def edit(id):
 	if request.method == 'GET':
-		query = "SELECT content, image_link, header_text, id, status, priority FROM page_content WHERE id="+id
+		query = "SELECT content, image_link, header_text, id, status, priority, big_image FROM page_content WHERE id="+id
 		cursor.execute(query)
 		data = cursor.fetchone()
 		# return id
@@ -128,9 +143,10 @@ def edit(id):
 		header_text= request.form['header']
 		status = request.form['status']
 		priority = request.form['priority']
+		big_image = request.form['big_image']
 
-		query = "UPDATE page_content SET content=%s, image_link=%s, header_text=%s, status=%s, priority=%s WHERE id =%s"
-		cursor.execute(query, (content, image_link, header_text, status, priority, id))
+		query = "UPDATE page_content SET content=%s, image_link=%s, header_text=%s, status=%s, priority=%s, big_image=%s WHERE id =%s"
+		cursor.execute(query, (content, image_link, header_text, status, priority, big_image, id))
 		conn.commit()
 		return redirect('/admin_portal?success1=ContentUpdated')
 

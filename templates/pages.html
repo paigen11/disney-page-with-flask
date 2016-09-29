@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+
+<div class='header'>
+		<ul class='menu-wrapper'>
+			<li><img src='../static/images/disney_logo.jpg'></li>
+			<li>Parks & Tickets</li>
+			<li>Places to Stay</li>
+			<li>Things to Do</li>
+			<li>Help</li>
+			<li>Cart</li>
+		</ul>
+	</div> 
+
+<div class='main-content'>
+		
+		<div class='main-header'>
+			<h2>{{data[2]}}</h2>
+		</div>
+
+		<div class='header-images'>
+			<img src='../static/images/{{data[1]}}'>
+		</div>
+		<div class='tickets'>
+			<p>Disney's Animal Kingdom Tickets Start at  
+			<span class='ticket-price'>$97.00</span>
+			for one-day!</p>
+			<button>Purchase Tickets</button>
+		</div>
+
+		<div class='header-text'>
+			<h1>{{data[0]}}</h1>
+		</div>
+		
+
+</div>
+
+{% endblock %}

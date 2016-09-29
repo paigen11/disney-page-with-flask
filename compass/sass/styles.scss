@@ -20,7 +20,7 @@
 // @import "views/payment";
 // @import "views/account";
 body{
-	background-color: #1d96d7 ;
+	background-color: #1d96d7;
 }
 
 form{
@@ -77,6 +77,47 @@ form{
 			max-width: 100%;
 		}
 	}
+	.header-images{
+		text-align: center;
+		img{
+			border-radius: 12px 12px 0 0;
+			max-width: 100%;
+		}
+	}
+
+	.header-text{
+		text-align: center;
+		padding-top: 45px;
+		padding-right: 12%;
+		padding-left: 12%;
+		border-bottom: 1px solid #ccc;
+	}
+	.tickets{
+		width: 900px;
+		height: 70px;
+		background-color: #1d96d7;
+		margin: auto;
+		border-radius: 0 0 12px 12px;
+		p{
+			display:inline-block;
+			line-height: 70px;
+			color: white;
+			font-size: 18px;
+			margin-left: 25px;
+			span{
+				font-size: 24px;
+			}
+		}
+		button{
+			display: inline-block;
+			background-color: #1d96d7;
+			border-radius: 12px;
+			color: white;
+			margin-left: 22%;
+		}	
+
+	}
+
 	.left-content-bar{
 		width: 69%;
 		display: inline-block;
@@ -179,4 +220,14 @@ form{
 			
 		}
 	}
+}
+
+form.form-horizontal{
+	margin-top: 50px;
+}
+
+table#home-content{
+	width: 95%;
+	border-radius: 5px;
+	border: solid 1px black;
 }

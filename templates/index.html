@@ -10,7 +10,7 @@
 			<li>Cart</li>
 		</ul>
 	</div> 
-
+	
 	<div class='main-content'>
 		<div class='main-header'>
 			<h1>Disney's Animal Kingdom Theme Park</h1>
@@ -32,7 +32,7 @@
 						<img src='static/images/{{item[1]}}'>
 					</div>	
 					<div class='hero-text-wrapper'>
-						<h4 class='block-header'>{{item[2]}}</h4>
+						<h4 class='block-header'><a href='pages/{{item[3]}}'>{{item[2]}}</a></h4>
 						<p class='block-text'>{{item[0]}}</p>
 					</div>
 					<div class='arrow-image'>
@@ -67,5 +67,6 @@
 		</div>
 
 	</div>
+	
 
 {% endblock %}	
